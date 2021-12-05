@@ -18,6 +18,6 @@ from django.urls import path
 from django.conf.urls import url,include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('',include('Instagram.urls'))
+    path(r'admin/', admin.site.urls),
+    path(r'',include('Instagram.urls'))
 ]
