@@ -17,13 +17,14 @@ def index(request):
 
 
 def search_by_username(request):
+
     if 'user' in request.GET and request.GET['user']:
         search_term = request.GET['user']
         searched_images = Image.get_user(search_term)
         message = f'{search_term}'
-        user = User.objects.all()
+        user1 = User.objects.all()
         args = {
-            "user": user,
+            "user1": user1,
             "images": searched_images,
             "message": message
         }
