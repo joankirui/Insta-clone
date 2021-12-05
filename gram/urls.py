@@ -16,9 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url,include
+# from django.contrib.auth import logout, views
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
     path(r'',include('Instagram.urls')),
-    path(r'^accounts/', include('registration.backends.simple.urls')),
+    # path(r'^accounts/', include('django_registration.backends.one_step.urls')),
+    # path('accounts/login/', views.LoginView.as_view(), name="login"),
+    # path(r'', include('django.contrib.auth.urls')),
+    # path(r'^logout/$',views.logout_then_login, name=logout),
 ]
