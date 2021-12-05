@@ -3,11 +3,21 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
-from Instagram.forms import CommentForm
+from Instagram.forms import CommentForm, RegisterForm
 from Instagram.models import Image,Comment,Likes,Profile
 
 
 # Create your views here.
+def registration(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('/login')
+    else:
+        form = RegisterForm()
+    return render(request, 'registration/sign-up.html', {"form": form})
+
 # @login_required(login_url='/accounts/login')
 def index(request):
     title = 'insta-clone'
