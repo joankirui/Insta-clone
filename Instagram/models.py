@@ -19,3 +19,10 @@ class Profile(models.Model):
 
     def delete_profile(self):
         self.delete()
+
+
+class Image(models.Model):
+    image = CloudinaryField('image',null=True)
+    img_name = models.CharField(max_length=30)
+    img_caption = models.TextField()
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
