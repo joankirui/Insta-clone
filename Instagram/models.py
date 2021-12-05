@@ -36,7 +36,7 @@ class Image(models.Model):
     img_likes = models.IntegerField(default=0)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     post_date = models.DateTimeField(auto_now_add=True,null=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='posts')
 
     def __str__(self):
         return self.img_caption

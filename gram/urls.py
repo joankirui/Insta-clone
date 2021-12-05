@@ -20,8 +20,8 @@ from django.conf.urls import url,include
 # from django_registration.backends.one_step.views import RegistrationView
 
 urlpatterns = [
-    path(r'admin/', admin.site.urls),
-    path(r'^',include('Instagram.urls')),
+    path('admin/', admin.site.urls),
+    url(r'^',include('Instagram.urls')),
     # path('accounts/register/', RegistrationView.as_view(success_url='/'),name='django_registration_register'),
     # path('accounts/', include('django_registration.backends.one_step.urls')),
     # path('accounts/', include('django.contrib.auth.urls')),

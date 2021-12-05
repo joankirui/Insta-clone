@@ -54,7 +54,7 @@ def post_pic(request):
         form = PostPicForm(request.POST, request.FILES)
         if form.is_valid():
             image = form.save(commit=False)
-            image.author = current_user
+            image.user = current_user
             image.save()
         return redirect('/')
     else:
