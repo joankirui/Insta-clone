@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
-from Instagram.forms import CommentForm, RegisterForm
+from Instagram.forms import CommentForm, PostPicForm, RegisterForm
 from Instagram.models import Image,Comment,Likes,Profile
 
 
@@ -47,6 +47,19 @@ def index(request):
         }
     return render(request,'index.html',param)
 
+# @login_required(login_url='/login')
+def post_pic(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = PostPicForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.author = current_user
+            image.save()
+        return redirect('/')
+    else:
+        form = PostPicForm(auto_id=False)
+    return render(request, 'new_pic.html', {"form": form})
 
 
 
