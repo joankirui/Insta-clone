@@ -29,7 +29,7 @@ def index(request):
         form = CommentForm(request.POST)
         img_id = request.POST['image_id']
         if form.is_valid():
-            comment = form.save(ccommit=False)
+            comment = form.save(commit=False)
             comment.user = current_user
             image = Image.get_image(img_id)
             comment.image = image
