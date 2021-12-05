@@ -86,7 +86,14 @@ class Comment(models.Model):
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.comment
+        return self.user
 
     def save_comment(self):
         self.save()
+
+class Likes(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user
