@@ -91,6 +91,11 @@ class Comment(models.Model):
     def save_comment(self):
         self.save()
 
+    @classmethod
+    def get_all_comments(cls):
+        comments = Comment.objects.all()
+        return comments
+
 class Likes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
