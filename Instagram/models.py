@@ -2,6 +2,8 @@ from django.db import models
 from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import User
 import datetime as dt
+from django.http import Http404
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your models here.
 class Profile(models.Model):
@@ -55,6 +57,19 @@ class Image(models.Model):
         ordering = ['-post_date']
 
     @classmethod
+    def get_image(request, id):
+        try:
+            image = Image.objects.get(pk=id)
+        except ObjectDoesNotExist:
+            raise Http404()
+        return image
+
+    @classmethod
+    def get_user(cls, search_term):
+        image = cls.objects.filter(user__username__icontains=search_term)
+        return image
+
+    @classmethod
     def get_images(cls):
         images = cls.objects.all()
         return images
@@ -63,3 +78,15 @@ class Image(models.Model):
     def get_profile_images(cls, profile):
         user_images = Image.objects.filter(profile__id=profile)
         return user_images
+
+class Comment(models.Model):
+    comment = models.TextField()
+    date = models.DateTimeField(auto_now_add=True,null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.comment
+
+    def save_comment(self):
+        self.save()
