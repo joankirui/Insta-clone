@@ -10,7 +10,31 @@ from Instagram.models import Image,Comment,Likes,Profile
 # @login_required(login_url='/accounts/login')
 def index(request):
     title = 'insta-clone'
-    return render(request,'index.html',{"title":title})
+    posts = Image.get_images()
+    comments = Comment.get_all_comments()
+    users = User.objects.all()
+    current_user = request.user
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        img_id = request.POST['image_id']
+        if form.is_valid():
+            comment = form.save(ccommit=False)
+            comment.user = current_user
+            image = Image.get_image(img_id)
+            comment.image = image
+            comment.save()
+        return redirect(f'/#{img_id}',)
+    else:
+        form = CommentForm(auto_id=False)
+
+        param = {
+            "title": title,
+            "posts": posts,
+            "form": form,
+            "comments": comments,
+            "users": users
+        }
+    return render(request,'index.html',param)
 
 
 
