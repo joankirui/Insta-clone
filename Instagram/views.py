@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
-from Instagram.forms import CommentForm, PostPicForm, RegisterForm
+from Instagram.forms import CommentForm, EditProfileForm, PostPicForm, ProfileUpdateForm, RegisterForm
 from Instagram.models import Image,Comment,Likes,Profile
 
 
@@ -61,6 +61,25 @@ def post_pic(request):
         form = PostPicForm(auto_id=False)
     return render(request, 'new_pic.html', {"form": form})
 
+@login_required(login_url='/login')
+def profile(request):
+    pics = Image.get_images()
+    if request.method == 'POST':
+        u_form = EditProfileForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST,
+                                   request.FILES,
+                                   instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f'You have successfully updated your profile!')
+            return redirect('/profile')
+    else:
+        u_form = EditProfileForm(instance=request.user)
+        p_form = ProfileUpdateForm(request.POST,
+                                   request.FILES,
+                                   instance=request.user.profile)
+    return render(request, 'profile.html', {"u_form": u_form, "p_form": p_form, "pics": pics})
 
 
 
