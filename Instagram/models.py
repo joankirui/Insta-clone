@@ -21,6 +21,11 @@ class Profile(models.Model):
     def delete_profile(self):
         self.delete()
 
+    @classmethod
+    def get_by_id(cls, id):
+        user_images = Profile.objects.filter(user=id).first()
+        return user_images
+
 
 class Image(models.Model):
     image = CloudinaryField('image',null=True)
@@ -29,3 +34,32 @@ class Image(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     post_date = models.DateTimeField(auto_now_add=True,null=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.img_caption
+
+    def save_image(self):
+        self.save()
+
+    def delete_image(self):
+        self.delete()
+
+    def update_image(self):
+        self.update_image()
+
+    def update_caption(self, caption):
+        self.img_caption = caption
+        self.save()
+
+    class Meta:
+        ordering = ['-post_date']
+
+    @classmethod
+    def get_images(cls):
+        images = cls.objects.all()
+        return images
+
+    @classmethod
+    def get_profile_images(cls, profile):
+        user_images = Image.objects.filter(profile__id=profile)
+        return user_images
