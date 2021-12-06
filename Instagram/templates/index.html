@@ -34,46 +34,46 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
-                <form action="{%url 'index' %}" class="form-group container" method="post" class="mt-2 ">
-                    {% csrf_token %}
-                    {{ form|crispy }}
-                    <input type="hidden" value="{{image.pk}}" name="image_id">
-                    <button class="btn btn-sm btn-info"> post </button>
-                </form>
-                <hr>
-                <strong class="container">Comments:</strong><br>
-                {% for comment in comments%}
-                {% if image.pk == comment.image.pk %}
-                    <p class="container">{{comment.comment}}</p>
-                {% endif %}
-                {% endfor %}
-            {% empty %}
-                <p>No images have been posted yet</p>
+        <form action="{%url 'index' %}" class="form-group container" method="post" class="mt-2 ">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="hidden" value="{{image.pk}}" name="image_id">
+            <button class="btn btn-sm btn-info"> post </button>
+        </form>
+        <hr>
+        <strong class="container">Comments:</strong><br>
+        {% for comment in comments%}
+        {% if image.pk == comment.image.pk %}
+            <p class="container" style="margin: 0 auto;max-width: 900px;padding: 50px 30px;">{{comment.comment}}</p>
+        {% endif %}
         {% endfor %}
-        </div>
-        </div>
-        <div class="col-md-2"></div>
-        <div class="col-md-4 d-inline-block">
-            <a href="{% url 'profile'%}">
-                <p class="mt-5">@{{user.username}}</p>
-                <img  src="{{ user.profile.prof_image.url}}" height="100px" width="100px" class="rounded-circle" alt="profile photo">
-            </a>
-            <h5>Suggestions to follow</h5>
-           {% for user in users%}
-           {% if current_user.username == user.username %}
-           <p style="display:none;">{{user.username}}</p>
-           {% else %}
-           <div class="form-inline">
-           <h6>{{user.username}}</h6>
+        {% empty %}
+            <p>No images have been posted yet</p>
+        {% endfor %}
+    </div>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-4 d-inline-block">
+        <a href="{% url 'profile'%}">
+            <p class="mt-5">@{{user.username}}</p>
+            <img  src="{{ user.profile.prof_image.url}}" height="100px" width="100px" class="rounded-circle" alt="profile photo">
+        </a>
+        <h5>Suggestions to follow</h5>
+        {% for user in users%}
+        {% if current_user.username == user.username %}
+        <p style="display:none;">{{user.username}}</p>
+        {% else %}
+        <div class="form-inline">
+            <h6>{{user.username}}</h6>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-<img src="{{ user.profile.prof_image.url}}" height="100px" width="100px" class="mt-5 rounded-circle" alt="">
-           &nbsp;&nbsp;&nbsp;
-               <button class="btn btn-sm">Follow</button>
+            <img src="{{ user.profile.prof_image.url}}" height="100px" width="100px" class="mt-5 rounded-circle" alt="">
+            &nbsp;&nbsp;&nbsp;
+               <button class="btn btn-info">Follow</button>
            {% endif %}
            {% endfor %}
         </div>

@@ -1,3 +1,4 @@
+from django.contrib.auth import forms
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -5,7 +6,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from Instagram.forms import CommentForm, EditProfileForm, PostPicForm, ProfileUpdateForm, RegisterForm
 from Instagram.models import Image,Comment,Likes,Profile
-
+from cloudinary.models import CloudinaryField
+from django import forms
 
 # Create your views here.
 def registration(request):
@@ -16,9 +18,9 @@ def registration(request):
         return redirect('/login')
     else:
         form = RegisterForm()
-    return render(request, 'registration/sign-up.html', {"form": form})
+    return render(request, 'registration/registration_form.html', {"form": form})
 
-# @login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 def index(request):
     title = 'insta-clone'
     posts = Image.get_images()
@@ -47,21 +49,29 @@ def index(request):
         }
     return render(request,'index.html',param)
 
-# @login_required(login_url='/login')
+@login_required(login_url='/accounts/login/')
 def post_pic(request):
     current_user = request.user
+    form = PostPicForm()
     if request.method == 'POST':
         form = PostPicForm(request.POST, request.FILES)
         if form.is_valid():
-            image = form.save(commit=False)
-            image.user = current_user
-            image.save()
+            form.save()
+            # context = {
+            #     "current_user": current_user,
+            #     "form": PostPicForm
+            # }
+            
+            #image.save()
+            # form.instance.user = request.user
+            # form.save()
         return redirect('/')
-    else:
-        form = PostPicForm(auto_id=False)
-    return render(request, 'new_pic.html', {"form": form})
+    
+       
+    return render(request, 'new_pic.html', {"current_user": current_user,"form": form})
 
-@login_required(login_url='/login')
+
+@login_required(login_url='/accounts/login/')
 def profile(request):
     pics = Image.get_images()
     if request.method == 'POST':
@@ -82,7 +92,7 @@ def profile(request):
     return render(request, 'profile.html', {"u_form": u_form, "p_form": p_form, "pics": pics})
 
 
-
+@login_required(login_url='/accounts/login/')
 def search_by_username(request):
 
     if 'user' in request.GET and request.GET['user']:
