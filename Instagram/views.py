@@ -18,9 +18,9 @@ def registration(request):
         return redirect('/login')
     else:
         form = RegisterForm()
-    return render(request, 'registration/registration_form.html', {"form": form})
+    return render(request, 'django_registration/registration_form.html', {"form": form})
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/login')
 def index(request):
     title = 'insta-clone'
     posts = Image.get_images()
@@ -49,7 +49,7 @@ def index(request):
         }
     return render(request,'index.html',param)
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/login')
 def post_pic(request):
     current_user = request.user
     form = PostPicForm()
@@ -71,14 +71,12 @@ def post_pic(request):
     return render(request, 'new_pic.html', {"current_user": current_user,"form": form})
 
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/login')
 def profile(request):
     pics = Image.get_images()
     if request.method == 'POST':
         u_form = EditProfileForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST,
-                                   request.FILES,
-                                   instance=request.user.profile)
+        p_form = ProfileUpdateForm(request.POST,request.FILES,instance=request.user.profile)
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
@@ -86,22 +84,21 @@ def profile(request):
             return redirect('/profile')
     else:
         u_form = EditProfileForm(instance=request.user)
-        p_form = ProfileUpdateForm(request.POST,
-                                   request.FILES,
-                                   instance=request.user.profile)
+        p_form = ProfileUpdateForm(request.POST,request.FILES,instance=request.user.profile)
+        
     return render(request, 'profile.html', {"u_form": u_form, "p_form": p_form, "pics": pics})
 
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/login')
 def search_by_username(request):
 
     if 'user' in request.GET and request.GET['user']:
         search_term = request.GET['user']
         searched_images = Image.get_user(search_term)
         message = f'{search_term}'
-        user1 = User.objects.all()
+        user = User.objects.all()
         args = {
-            "user1": user1,
+            "user": user,
             "images": searched_images,
             "message": message
         }

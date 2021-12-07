@@ -5,7 +5,7 @@
             <a class="nav-link" href="/" style="font-family:'Lobster',cursive ;font-size: 40px;">&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-instagram" style="font-size: 40px;"></i>Instagram</a>
           </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0" action= "" role="search">
+        <form class="form-inline my-2 my-lg-0" action= "{% url 'search_by_username' %}" role="search">
           <input class="form-control mr-sm-2" type="search" placeholder="Search user" name = "user" aria-label="Search">&nbsp;&nbsp;
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
         </form>
@@ -24,7 +24,7 @@
         </li>
         {% else %}
         <li class="nav-item">
-          <a class="nav-link" href="/accounts/login">Login</a>
+          <a class="nav-link" href="/login">Login</a>
         </li>
         {% endif %}
       </ul>

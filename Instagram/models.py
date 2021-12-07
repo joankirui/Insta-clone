@@ -12,7 +12,7 @@ class Profile(models.Model):
     bio = models.CharField(max_length=30,blank=True,null=True)
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return self.user
     
     def save_profile(self):
         self.save()
@@ -82,7 +82,7 @@ class Image(models.Model):
 class Comment(models.Model):
     comment = models.TextField()
     date = models.DateTimeField(auto_now_add=True,null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,default='1')
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
 
     def __str__(self):
