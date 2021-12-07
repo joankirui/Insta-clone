@@ -7,12 +7,13 @@ from django.core.exceptions import ObjectDoesNotExist
 
 # Create your models here.
 class Profile(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
-    prof_image = CloudinaryField('image',null=True)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='user')
+    prof_image = CloudinaryField('photos/')
     bio = models.CharField(max_length=30,blank=True,null=True)
+    name = models.CharField(max_length=30,blank=True)
 
     def __str__(self):
-        return self.user
+        return f'{self.user.username}Profile'
     
     def save_profile(self):
         self.save()
@@ -30,15 +31,24 @@ class Profile(models.Model):
 
 
 class Image(models.Model):
-    image = CloudinaryField('image',null=True)
-    img_name = models.CharField(max_length=30)
+    image = CloudinaryField('photos/')
+    # image = models.ImageField(upload_to = 'photos/',default = 'blank')
+    img_name = models.CharField(max_length=30,blank=True)
     img_caption = models.TextField()
     img_likes = models.IntegerField(default=0)
     post_date = models.DateTimeField(auto_now_add=True,null=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='image')
+    user = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='image')
+
+
+    class Meta:
+        ordering = ['-pk']
+
+    def get_absolute_url(self):
+        return f'/post/{self.id}'
 
     def __str__(self):
-        return self.img_caption
+        return f'{self.user.name}Image'
+
 
     def save_image(self):
         self.save()
@@ -53,8 +63,6 @@ class Image(models.Model):
         self.img_caption = caption
         self.save()
 
-    class Meta:
-        ordering = ['-post_date']
 
     @classmethod
     def get_image(request, id):
@@ -80,7 +88,7 @@ class Image(models.Model):
         return user_images
 
 class Comment(models.Model):
-    comment = models.TextField()
+    comment = models.CharField(max_length=30)
     date = models.DateTimeField(auto_now_add=True,null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE,default='1')
     image = models.ForeignKey(Image, on_delete=models.CASCADE)

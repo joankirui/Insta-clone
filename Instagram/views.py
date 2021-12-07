@@ -56,7 +56,7 @@ def post_pic(request):
     if request.method == 'POST':
         form = PostPicForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            new_item = form.save()
             # context = {
             #     "current_user": current_user,
             #     "form": PostPicForm

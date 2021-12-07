@@ -42,7 +42,7 @@
             {% csrf_token %}
             {{ form|crispy }}
             <input type="hidden" value="{{image.pk}}" name="image_id">
-            <button class="btn btn-sm btn-info"> post </button>
+            <button class="btn btn-sm btn-info"> post </button><br>
         </form>
         <hr>
         <strong class="container">Comments:</strong><br>
