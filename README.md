@@ -64,7 +64,7 @@
     If you have any question or contributions, please email me at [joankirui99@gmail.com]
 
 # License
-    <img src="license.svg" alt="MIT License" width="10" height="3">
+    MIT License
     Copyright (c) 2021 Joan Kirui
 
 
