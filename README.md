@@ -17,7 +17,56 @@
     To get the project .......
 
     Cloning the repository:
-    
+
     https://github.com/joankirui/Insta-clone.git 
+
+    Navigate into the folder and install requirements
+
+    cd My-Instagram pip install -r requirements.txt
+
+    Install and activate Virtual
+
+    - python3.6 -m venv --without-pip virtual - source virtual/bin/activate 
+
+    Install Dependencies
+
+    pip install -r requirements.txt 
+
+    Setup Database
+
+    SetUp your database User,Password, Host then make migrate
+
+    python manage.py makemigrations Instagram
+
+    Now Migrate
+
+    python manage.py migrate 
+
+    Run the application
+
+    python manage.py runserver 
+
+    Testing the application
+
+    python manage.py test
+
+    Open the application on your browser 127.0.0.1:8000.
+
+# Technology used
+    * Python3.6
+    * Django 3.2.9
+    * Heroku
+
+# Known Bugs
+    There are no known bugs currently but pull requests are allowed incase you spot a bug
+
+# Contact Information
+    If you have any question or contributions, please email me at [joankirui99@gmail.com]
+
+# License
+    <img src="license.svg" alt="MIT License" width="10" height="3">
+    Copyright (c) 2021 Joan Kirui
+
+
 
 
