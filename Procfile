@@ -1,1 +1,1 @@
-web: gram.wsgi
+web: gunicorn gram.wsgi
