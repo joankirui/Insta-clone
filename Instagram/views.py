@@ -15,7 +15,7 @@ def registration(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect('/login')
+        return redirect('index')
     else:
         form = RegisterForm()
     return render(request, 'django_registration/registration_form.html', {"form": form})
