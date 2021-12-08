@@ -26,15 +26,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 #adding config
 cloudinary.config(
-    cloud_name = config('CLOUD_NAME'),
-    api_key = config('API_KEY'),
-    api_secret = config('API_SECRET')
+    cloud_name = 'chelangat',
+    api_key = '838883598586798',
+    api_secret = 'lDATFEFSkLWnfFCwgehhoaNpFt8'
 )
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': config('CLOUD_NAME'),
-    'API_KEY': config('API_KEY'),
-    'API_SECRET': config('API_SECRET')
+    'CLOUD_NAME': 'chelangat',
+    'API_KEY': '838883598586798',
+    'API_SECRET': 'lDATFEFSkLWnfFCwgehhoaNpFt8'
 }
 
 MODE=config("MODE", default="dev")
