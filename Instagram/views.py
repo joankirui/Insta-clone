@@ -73,7 +73,8 @@ def post_pic(request):
 
 @login_required(login_url='/accounts/login/')
 def profile(request):
-    pics = Image.get_images()
+    current_user = request.user
+    pics = Image.objects.filter(user_id=current_user.id)
     if request.method == 'POST':
         u_form = EditProfileForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST,request.FILES,instance=request.user.profile)

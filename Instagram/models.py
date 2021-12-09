@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
-    prof_image = CloudinaryField('photos/')
+    prof_image = CloudinaryField('photos')
     bio = models.CharField(max_length=30,blank=True,null=True)
     name = models.CharField(max_length=30,blank=True)
 
@@ -31,8 +31,7 @@ class Profile(models.Model):
 
 
 class Image(models.Model):
-    image = CloudinaryField('photos/')
-    # image = models.ImageField(upload_to = 'photos/',default = 'blank')
+    image = CloudinaryField('photos')
     img_name = models.CharField(max_length=30,blank=True)
     img_caption = models.TextField()
     img_likes = models.IntegerField(default=0)
