@@ -20,7 +20,7 @@ def registration(request):
         form = RegisterForm()
     return render(request, 'django_registration/registration_form.html', {"form": form})
 
-@login_required(login_url='/account/register')
+@login_required(login_url='/accounts/register')
 def index(request):
     title = 'insta-clone'
     posts = Image.get_images()
