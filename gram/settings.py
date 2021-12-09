@@ -31,6 +31,8 @@ cloudinary.config(
     api_secret = 'lDATFEFSkLWnfFCwgehhoaNpFt8'
 )
 
+LOGIN_REDIRECT_URL = 'index'
+
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'chelangat',
     'API_KEY': '838883598586798',

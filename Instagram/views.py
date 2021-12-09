@@ -20,7 +20,7 @@ def registration(request):
         form = RegisterForm()
     return render(request, 'django_registration/registration_form.html', {"form": form})
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 def index(request):
     title = 'insta-clone'
     posts = Image.get_images()
@@ -49,7 +49,7 @@ def index(request):
         }
     return render(request,'index.html',param)
 
-@login_required(login_url='/login')
+@login_required(login_url='/accounts/login/')
 def post_pic(request):
     current_user = request.user
     form = PostPicForm()
@@ -71,7 +71,7 @@ def post_pic(request):
     return render(request, 'new_pic.html', {"current_user": current_user,"form": form})
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/accounts/login/')
 def profile(request):
     pics = Image.get_images()
     if request.method == 'POST':
@@ -89,7 +89,7 @@ def profile(request):
     return render(request, 'profile.html', {"u_form": u_form, "p_form": p_form, "pics": pics})
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/accounts/login/')
 def search_by_username(request):
 
     if 'user' in request.GET and request.GET['user']:
